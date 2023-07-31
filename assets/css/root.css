@@ -1,9 +1,9 @@
 :root{
     --font-homepage: 96px;
-    --syze-first-title: 50px;
-    --syze-second-title: 36px;
+    --size-first-title: 50px;
+    --size-second-title: 36px;
     --size-content: 25px;
-    --size-button: 24px;
+    --size-button: 17px;
     --primary-color: #0F6BAE;
     --secondary-color: #D4D4DE;
 }
