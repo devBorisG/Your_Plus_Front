@@ -1,7 +1,7 @@
 .inicio_sesion{
     height: 100vh;
     width: 100vw;
-    background-image: url(../imgs/image-4.png);
+    background-image: url(../imgs/image-login.png);
     background-size: cover;
     display: flex;
     justify-content: center;
