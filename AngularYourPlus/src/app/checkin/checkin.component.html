@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="popup1" class="popup">
+    <div class="popup-content">
+      <span class="close" id="closePopupButton1">&times;</span>
+      <img class="logo_scroll-login" src="images/iniciar-sesion.png" alt="">
+      <h2>Iniciar Sesion</h2>
+      <form id="popupForm">
+
+        <input class="inputpopup" type="text" id="nombre" placeholder="Nombre">
+
+        <input class="inputpopup" type="text" id="apellido" placeholder="Apellido">
+
+        <input class="inputpopup" type="text" id="correo" placeholder="Correo">
+
+        <div class="inputpassword">
+          <input type="password" id="password" placeholder="Password">
+          <img src="images/eye-close.png" class="iconeye" id="eyeicon">
+        </div>
+
+        <label for="rol">Rol:</label>
+        <select class="inputpopup" id="rol" name="gustos">
+          <option value="Cliente">Cliente</option>
+          <option value="Entrenador" selected>Entrenador</option>
+        </select>
+        <div class="center">
+          <button type="button" class="btn btn-danger">Registrarse</button>
+      </div>
+
+      </form>
+    </div>
+  </div>
+</body>
+</html>

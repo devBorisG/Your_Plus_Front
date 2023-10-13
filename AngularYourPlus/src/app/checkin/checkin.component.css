@@ -1,0 +1,81 @@
+/* Estilos para el formulario popup */
+.popup {
+  z-index: 1000;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  width: 400px;
+  padding: 20px;
+  background: #eeeaea;
+  box-shadow: 0 2px 6px rgba(250, 248, 248, 0.1);
+  border-radius: 5px;
+}
+.popup .popup-content h2{
+  color: #252323;
+  text-align: center;
+  padding: 0px;
+  margin-bottom: 10px;
+}
+.popup-content {
+  text-align: left;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Estilos para el botón de envío del formulario popup */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+.registrar_usuario{
+  margin-top: 20px;
+ float: right;
+}
+
+/* Estilos para los campos de entrada del formulario popup */
+.inputpopup {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.inputpassword{
+  display: flex;
+  max-width: 500px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  background: #fff;
+}
+.onpass{
+  margin-bottom: 40px;
+}
+
+.inputpassword input{
+  width: 100%;
+  outline: 0;
+  font-size: 15px;
+
+  border: 0;
+
+}
+.inputpassword .iconeye{
+  width: 25px;
+  cursor: pointer;
+}
+.logo_scroll-login{
+  width: 60px;
+  margin-left: 150px;
+}
