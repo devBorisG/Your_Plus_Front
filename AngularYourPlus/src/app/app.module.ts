@@ -9,7 +9,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent} from './footer/footer.component';
 import { TestimoniesComponent } from './testomonies/testimonies.component';
 import { CarouselComponent } from './carousel/carousel.component';
-import { CheckinComponent } from './checkin/check.component';
+import { checkinComponent } from './checkin/check.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -19,14 +22,19 @@ import { CheckinComponent } from './checkin/check.component';
     FooterComponent,
     TestimoniesComponent,
     CarouselComponent,
-    CheckinComponent
+    checkinComponent,
+    LoginComponent,
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [
     CargarScriptsService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+ }

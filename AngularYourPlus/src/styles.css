@@ -1,0 +1,24 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.nav-link {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.nav-link:hover {
+  color: #007BFF;
+}

@@ -4,7 +4,6 @@
   top: 0;
   width: 100%;
   z-index: 100;
-  height: 100px;
   background-image: linear-gradient(60deg, #48ffff 0, #44ffff 12.5%, #47effc 25%, #4cd5e6 37.5%, #50b9cc 50%, #529eb0 62.5%, #518697 75%, #4e717f 87.5%, #4a606b 100%); /* Cambia el color de fondo del menú */
 }
 .nav-link {
@@ -21,7 +20,6 @@
 }
 .section1{
   height: 500px;
-
   margin-top: 100px;
 }
  .section2{
