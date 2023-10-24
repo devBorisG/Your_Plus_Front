@@ -1,0 +1,55 @@
+  .img-carrusel{
+    width: 100%;
+    height: 780px;
+    opacity: 0.8;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 250px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: hsl(0, 0%, 100%);
+    padding: 10px;
+  }
+
+      .text-scroll {
+        font-size: 40px;
+        text-align: center;
+      }
+
+
+      .text-2 {
+        font-size: 28px;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .text-scroll {
+          font-size: 20px;
+        }
+
+        .text-2 {
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .text-scroll {
+          font-size: 18px;
+        }
+
+        .text-2 {
+          font-size: 14px;
+        }
+      }
+      button{
+        font-size: 25px;
+        padding: 10px;
+        margin:0  20px 0  10px;
+      }
+

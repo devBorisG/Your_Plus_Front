@@ -1,0 +1,87 @@
+
+
+/* Estilos generales para el footer */
+.footer {
+  background-color: #222;
+  color: #fff;
+  padding: 90px 0;
+  position: absolute;
+  bottom: auto;
+  width: 100%;
+}
+
+/* Estilos para el contenido del footer */
+.footer-content {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-left: 0px;
+}
+
+/* Estilos para las secciones del footer (Contacto, Acerca de Nosotros, Redes Sociales) */
+.footer-content > div {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  margin: 10px; /* Espaciado entre las secciones */
+  max-width: 300px; /* Ancho máximo para las secciones en pantallas pequeñas */
+  box-sizing: border-box;
+}
+
+/* Estilos para los títulos de sección */
+.footer-content h4 {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+/* Estilos para los íconos de contacto */
+.contact-section i {
+  color: #007BFF;
+  margin-right: 5px;
+}
+.logo_scroll{
+  width: 105px;
+}
+/* Estilos para los enlaces de redes sociales */
+.social-icons a {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 50%;
+  font-size: 30px;
+  color: #fff;
+  margin-left: 10px;
+  margin-top: 50px;
+  transition: color 0.3s ease;
+
+}
+
+/* Estilos para los enlaces de redes sociales al pasar el ratón por encima */
+.social-icons a:hover {
+  color: #68b4aa;
+}
+
+/* Media Query para tamaños de pantalla más pequeños (por ejemplo, dispositivos móviles) */
+@media (max-width: 768px) {
+  .footer-content > div {
+    flex: 1 1 calc(50% - 20px); /* Dos columnas en pantallas pequeñas */
+  }
+}
+.fa-facebook-f:hover{
+	color:#2b58d4;
+}
+.fa-linkedin:hover{
+	color:#3b5998;
+}
+.fa-instagram:hover{
+	color:#e61957;
+}
+.fa-google-plus:hover{
+	color:#dd4b39;
+}
+.fa-whatsapp:hover{
+	color:#41f168;
+}

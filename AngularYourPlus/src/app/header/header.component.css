@@ -1,0 +1,58 @@
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-image: linear-gradient(60deg, #48ffff 0, #44ffff 12.5%, #47effc 25%, #4cd5e6 37.5%, #50b9cc 50%, #529eb0 62.5%, #518697 75%, #4e717f 87.5%, #4a606b 100%); /* Cambia el color de fondo del menú */
+}
+.nav-link {
+
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+.navbar-light .navbar-brand,
+.navbar-light .navbar-nav .nav-link {
+  color: #ffffff; /* Cambia el color de los enlaces */
+  font-size: 25px;
+  font-family: 'Montserrat', sans-serif;
+}
+.section1{
+  height: 500px;
+  margin-top: 100px;
+}
+ .section2{
+  height: 500px;
+  margin-top: 200px;
+}
+.section3{
+
+  margin-top: 400px;
+}
+.logo_scroll{
+  width: 90px;
+  margin-right: 20px;
+}
+
+
+.botonRegistro:hover {
+  background-color: #e78fbb;
+}
+
+.botonRegistro{
+
+  background-color: transparent;
+  background-size: 300%;
+  color: #ffffff;
+  cursor:pointer;
+  text-shadow: rgba(0, 0, 0, 0.062);
+  border-radius: 8px;
+  font-size:25px;
+  width:190px;
+  height:60px;
+}
+.btn{
+  font-size: 25px;
+  font-family: 'Montserrat', sans-serif;
+}
