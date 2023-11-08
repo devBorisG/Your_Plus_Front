@@ -1,0 +1,64 @@
+.container {
+
+position: absolute;
+margin-top: 200px;
+margin-left: 300px;
+}
+
+h4 {
+  margin: 2rem 0rem 1rem;
+}
+
+.table-image {
+  td, th {
+    vertical-align: middle;
+  }
+}
+
+@media (max-width: 767px) {
+  #responsive-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    overflow-y: hidden;
+    border-collapse: collapse;
+  }
+
+  #responsive-table thead {
+    display: none;
+  }
+
+  #responsive-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+  }
+
+  #responsive-table tbody td {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #responsive-table tbody td::before {
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  #responsive-table tbody td:last-child {
+    margin-bottom: 0;
+  }
+}
+button{
+  margin-left: 30px;
+}
+.botonRegistroProducto{
+  margin-bottom: 3000px;
+  font-size: 30px;
+}
+.row{
+  margin-top: 100px;
+}
+label{
+  float: left;
+}

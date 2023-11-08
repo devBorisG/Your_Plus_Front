@@ -1,0 +1,56 @@
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-title text-center">
+          <h4>REGISTRAR PRODUCTO</h4>
+        </div>
+        <div class="d-flex flex-column text-center">
+          <form [formGroup]="registerproductoform">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
+            </div>
+            <div class="form-group">
+              <label for="precio">Precio:</label>
+              <input type="text" class="form-control" id="precio" placeholder="Precio" formControlName="precio">
+            </div>
+            <div class="form-group">
+              <label for="Descripcion">Descripción:</label>
+              <input type="text" class="form-control" id="Descripcion" placeholder="Descripción" formControlName="descripcion">
+            </div>
+            <div class="form-group">
+              <label for="Imagen">Imagen:</label>
+              <input type="text" class="form-control" id="Imagen" placeholder="Imagen" formControlName="imagen">
+            </div>
+            <div class="form-group">
+              <label for="categoria">Categoría:</label>
+              <select class="form-control" id="categoria" formControlName="categoria">
+                <option value="">Selecciona una categoría</option>
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="Laboratorio">Laboratorio:</label>
+              <select class="form-control" id="Laboratorio" formControlName="laboratorio">
+                <option value="">Selecciona un laboratorio</option>
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+              </select>
+            </div>
+            <button type="button" class="buton btn btn-success" (click)="saveProducto()">Guardar</button>
+            <button type="button" class="buton btn btn-danger">Cerrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit} from "@angular/core";
-import { CargarScriptsService } from "./../cargar-scripts.service";
+import { CargarScriptsService } from "../cargar-scripts.service";
 
 @Component({
   selector: 'app-header',
@@ -9,7 +9,7 @@ import { CargarScriptsService } from "./../cargar-scripts.service";
 })
 export  class HeaderComponent implements OnInit{
   constructor(private _cargarScripts:CargarScriptsService){
-    _cargarScripts.carga(["menu-scroll"]);
+    _cargarScripts.carga(["menu-sroll"]);
   }
 
   ngOnInit(): any {

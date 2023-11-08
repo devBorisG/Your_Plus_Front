@@ -38,9 +38,9 @@ function test(){
   $(".navbar-collapse").slideToggle(300);
   setTimeout(function(){ test(); });
   });
-
+  // --------------add active class-on another-page move----------
   jQuery(document).ready(function($){
-
+  // Get current path and find target link
   var path = window.location.pathname.split("/").pop();
 
   if ( path == '' ) {

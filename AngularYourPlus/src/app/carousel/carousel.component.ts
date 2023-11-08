@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { CargarScriptsService } from "./../cargar-scripts.service";
+import { CargarScriptsService } from "../cargar-scripts.service";
 @Component ({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
