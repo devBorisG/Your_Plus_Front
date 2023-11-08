@@ -1,0 +1,114 @@
+.container {
+  padding: 0rem 0rem;
+  position: absolute;
+}
+
+@media (min-width: 1000px) {
+  .modal-dialog {
+    max-width: 500px;
+    max-height: 1000px;
+  }
+  .modal-dialog .modal-content {
+    padding: 1rem;
+  }
+}
+.modal-header .close {
+  margin-top: -1.5rem;
+}
+
+.form-title {
+  margin: -2rem 0rem 2rem;
+}
+
+.btn-round {
+float: right;
+  width: 160px;
+}
+
+.delimiter {
+  padding: 1rem;
+}
+
+.social-buttons .btn {
+  margin: 0 0.5rem 1rem;
+}
+
+.signup-section {
+  padding: 0.3rem 0rem;
+}
+.logo_scroll-login{
+  width: 100px;
+
+}
+.buton{
+  float: right;
+  padding: 10px 30px;
+  margin-left: 20px;
+}
+label{
+  float: left;
+}
+.container {
+
+  position: absolute;
+  margin-top: 200px;
+  margin-left: 300px;
+  }
+
+  h4 {
+    margin: 2rem 0rem 1rem;
+  }
+
+  .table-image {
+    td, th {
+      vertical-align: middle;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #responsive-table {
+      width: 100%;
+      margin-bottom: 1rem;
+      overflow-y: hidden;
+      border-collapse: collapse;
+    }
+
+    #responsive-table thead {
+      display: none;
+    }
+
+    #responsive-table tbody tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+    }
+
+    #responsive-table tbody td {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #responsive-table tbody td::before {
+      content: attr(data-label);
+      font-weight: bold;
+    }
+
+    #responsive-table tbody td:last-child {
+      margin-bottom: 0;
+    }
+  }
+  button{
+    margin-left: 30px;
+  }
+  .botonRegistroProducto{
+    margin-bottom: 3000px;
+    font-size: 30px;
+  }
+  .row{
+    margin-top: 100px;
+  }
+  label{
+    float: left;
+  }
