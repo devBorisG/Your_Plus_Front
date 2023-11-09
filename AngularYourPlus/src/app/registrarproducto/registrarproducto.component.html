@@ -8,10 +8,10 @@
       </div>
       <div class="modal-body">
         <div class="form-title text-center">
-          <h4>REGISTRAR PRODUCTO</h4>
+          <h4>Regitrar Producto</h4>
         </div>
         <div class="d-flex flex-column text-center">
-          <form [formGroup]="registerproductoform">
+          <form [formGroup]="registrarproducto">
             <div class="form-group">
               <label for="nombre">Nombre:</label>
               <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
@@ -40,6 +40,99 @@
             <div class="form-group">
               <label for="Laboratorio">Laboratorio:</label>
               <select class="form-control" id="Laboratorio" formControlName="laboratorio">
+                <option value="">Selecciona un laboratorio</option>
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+              </select>
+            </div>
+            <button type="button" class="buton btn btn-success" (click)="saveProducto()">Guardar</button>
+            <button type="button" class="buton btn btn-danger">Cerrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <button data-toggle="modal" data-target="#loginModal" type="button" class="btn btn-danger botonRegistro">Adicionar Producto</button>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Imagen</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Laboratorio</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of productos">
+              <td>{{ producto.id }}</td>
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.precio }}</td>
+              <td>{{ producto.imagen }}</td>
+              <td>{{ producto.categoria }}</td>
+              <td>{{ producto.laboratorio }}</td>
+              <td>
+                <button type="button" data-toggle="modal" data-target="#editalModal" class="btn btn-success" (click)="updateProducto(producto)"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger" (click)="Deleteproducto(producto)"><i class="far fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="editalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-title text-center">
+          <h4>Editar Producto</h4>
+        </div>
+        <div class="d-flex flex-column text-center">
+          <form [formGroup]="editarproducto">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+            </div>
+            <div class="form-group">
+              <label for="precio">Precio:</label>
+              <input type="text" class="form-control" id="precio" placeholder="Precio">
+            </div>
+            <div class="form-group">
+              <label for="Descripcion">Descripción:</label>
+              <input type="text" class="form-control" id="Descripcion" placeholder="Descripción">
+            </div>
+            <div class="form-group">
+              <label for="Imagen">Imagen:</label>
+              <input type="text" class="form-control" id="Imagen" placeholder="Imagen">
+            </div>
+            <div class="form-group">
+              <label for="categoria">Categoría:</label>
+              <select class="form-control" id="categoria">
+                <option value="">Selecciona una categoría</option>
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="Laboratorio">Laboratorio:</label>
+              <select class="form-control" id="Laboratorio">
                 <option value="">Selecciona un laboratorio</option>
                 <option value="opcion1">Opción 1</option>
                 <option value="opcion2">Opción 2</option>

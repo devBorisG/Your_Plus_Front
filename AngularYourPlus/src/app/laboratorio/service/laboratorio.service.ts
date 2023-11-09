@@ -4,40 +4,43 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Laboratorio } from 'src/app/domain/laboratorio';
 
-
+const laboratorioUrl = environment.urllaboratorio;
 
 @Injectable({
     providedIn: 'root'
 })
 export class LaboratorioService {
 
-  private urlMicroServiceYourPlus = '';
+
     constructor(private http: HttpClient) { }
 
+    public getLaboratorio(params: any): Observable<Object> {
+      return this.http.get(`${laboratorioUrl}`, { params, observe: 'response' });
+  }
 
-    public saveLaboratorio(laboratorio: Laboratorio) {
-      const url = `${this.urlMicroServiceYourPlus}/registerponer el de registro`;
-      return this.http.post(url, laboratorio);
+    public saveLaboratorio(laboratorio: Laboratorio): Observable<Object>  {
 
+      return this.http.post(`${laboratorioUrl}`, laboratorio, { observe: 'response' });
 
-    }
-/*
-    public updateClient(clientId: string, producto: Producto): Observable<Object> {
-
-        let params = {
-            "clientId": clientId
-        }
-        return this.http.put(`${clientUrl}`, producto , { params, observe: 'response' });
 
     }
 
-    public deleteClient(clientId: string): Observable<any> {
+    public updateboratorio(laboratoriotId: string, laboratorio: Laboratorio): Observable<Object> {
 
         let params = {
-            "clientId": clientId
+            "laboratoriotId": laboratoriotId
+        }
+        return this.http.put(`${laboratorioUrl}`, laboratorio , { params, observe: 'response' });
+
+    }
+
+    public DeleLaboratorio(laboratoriotId: string): Observable<any> {
+
+        let params = {
+            "laboratoriotId": laboratoriotId
         }
 
-        return this.http.delete(`${clientUrl}`, { params, observe: 'response' });
+        return this.http.delete(`${laboratorioUrl}`, { params, observe: 'response' });
 
-    }*/
+    }
 }

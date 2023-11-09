@@ -4,40 +4,30 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Producto } from 'src/app/domain/producto';
 
-
+const productourl = environment.urlproducto;
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ProductoService {
 
-  private urlMicroServiceYourPlus = '';
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
+  public saveProducto(producto: Producto): Observable<Object> {
+    return this.http.post(`${productourl}`, producto, { observe: 'response' });
+  }
 
-    public saveProducto(producto: Producto) {
-      const url = `${this.urlMicroServiceYourPlus}/registerponer el de registro`;
-      return this.http.post(url, producto);
+  public getProductos(params: any): Observable<Object> {
+    return this.http.get(`${productourl}`, { params, observe: 'response' });
+  }
 
+  public updateProducto(productoId: string, producto: Producto): Observable<Object> {
+    let params = { "productoId": productoId };
+    return this.http.put(`${productourl}`, producto, { params, observe: 'response' });
+  }
 
-    }
-/*
-    public updateClient(clientId: string, producto: Producto): Observable<Object> {
-
-        let params = {
-            "clientId": clientId
-        }
-        return this.http.put(`${clientUrl}`, producto , { params, observe: 'response' });
-
-    }
-
-    public deleteClient(clientId: string): Observable<any> {
-
-        let params = {
-            "clientId": clientId
-        }
-
-        return this.http.delete(`${clientUrl}`, { params, observe: 'response' });
-
-    }*/
+  public Deleteproducto(productonombre: string): Observable<any> {
+    let params = { "productonombre": productonombre };
+    return this.http.delete(`${productourl}`, { params, observe: 'response' });
+  }
 }

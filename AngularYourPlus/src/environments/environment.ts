@@ -2,9 +2,14 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const urlBase = 'http://localhost:8080';
 export const environment = {
   production: true,
-  urlMicroServiceYourPlus: 'http://localhost:8080'
+  url: `${urlBase}`,
+  urlautentication: `${urlBase}/authenticate`,
+  urllaboratorio: `${urlBase}/yourplus/v1/laboratorios`,
+  urlpersona: `${urlBase}/yourplus/v1/personas`,
+  urlproducto: `${urlBase}/yourplus/v1/productos`,
 };
 
 /*

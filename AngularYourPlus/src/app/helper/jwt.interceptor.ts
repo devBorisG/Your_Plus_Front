@@ -15,8 +15,8 @@
 
       intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
           const token = this.auth.getToken();
-          const isApiUrl = request.url.startsWith(environment.urlMicroServiceYourPlus);
-          const ignoreUrls = [`${environment.urlMicroServiceYourPlus}/authenticate`, `${environment.urlMicroServiceYourPlus}/register`];
+          const isApiUrl = request.url.startsWith(environment.url);
+          const ignoreUrls = [`${environment.urlautentication}`, `${environment.urlpersona}`];
           if (isApiUrl && !ignoreUrls.some(url => request.url.includes(url))) {
               request = request.clone({
                 setHeaders: {

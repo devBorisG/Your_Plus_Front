@@ -6,26 +6,27 @@ import { Persona } from 'src/app/domain/persona';
 
 import { environment } from 'src/environments/environment';
 import { jwtDecode} from 'jwt-decode';
-
+const autenticateurl = environment.urlautentication;
+const urlpersona = environment.urlpersona;
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private urlMicroServiceYourPlus = '';
+
 
   constructor(public http: HttpClient) {
-    this.urlMicroServiceYourPlus = environment.urlMicroServiceYourPlus;
+
   }
 
   authenticate(persona: CredentialPersona){
-    const url = `${this.urlMicroServiceYourPlus}/authenticateponerelauntenticacion`;
-    return this.http.post(url, persona);
+
+    return this.http.post(`${autenticateurl}`, persona);
   }
 
   Registrar(persona: Persona){
-    const url = `${this.urlMicroServiceYourPlus}/registerponer el de registro`;
-    return this.http.post(url, persona);
+
+    return this.http.post(`${urlpersona}`, persona);
   }
 
   saveToken(token: string){
