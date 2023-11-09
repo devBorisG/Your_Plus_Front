@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   persona: FormGroup = new FormGroup({
-    email: new FormControl('', [
+    correo: new FormControl('', [
       Validators.pattern(
         '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
       ),
@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
     this.loading = true; // Habilita el botón
     this.auth.authenticate(from).subscribe(
       (res) => {
-        this.auth.saveToken(res['token']);
+        console.log(res['token']);
+        // this.auth.saveToken(res['token']);
         this.router.navigate(['producto']); // Redirige a la página después de iniciar sesión
       },
       (error) => {

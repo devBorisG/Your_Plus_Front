@@ -17,7 +17,14 @@ import { HomeproductoComponent} from './homeproducto/homeproducto.component';
 import { RegistrarproductoComponent } from './registrarproducto/registrarproducto.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LaboratorioComponent } from './laboratorio/laboratorio.component';
+import { RouterModule,Routes } from '@angular/router';
 
+const routes: Routes = [
+  {path: 'producto', component: ProductoComponent},
+  {path: 'homeproducto', component: HomeproductoComponent},
+  {path: 'registarproducto', component: RegistrarproductoComponent},
+  {path: 'laboratorio', component: LaboratorioComponent},
+];
 
 @NgModule({
   declarations: [
@@ -38,11 +45,10 @@ import { LaboratorioComponent } from './laboratorio/laboratorio.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    // AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
-
-
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [
     CargarScriptsService],

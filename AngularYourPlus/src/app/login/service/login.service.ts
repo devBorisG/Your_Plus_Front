@@ -6,6 +6,7 @@ import { Persona } from 'src/app/domain/persona';
 
 import { environment } from 'src/environments/environment';
 import { jwtDecode} from 'jwt-decode';
+
 const autenticateurl = environment.urlautentication;
 const urlpersona = environment.urlpersona;
 @Injectable({
@@ -13,14 +14,11 @@ const urlpersona = environment.urlpersona;
 })
 export class AuthService {
 
-
-
   constructor(public http: HttpClient) {
 
   }
 
   authenticate(persona: CredentialPersona){
-
     return this.http.post(`${autenticateurl}`, persona);
   }
 
@@ -30,6 +28,7 @@ export class AuthService {
   }
 
   saveToken(token: string){
+    console.log(token)
     sessionStorage.setItem('currentUser', token);
   }
 
