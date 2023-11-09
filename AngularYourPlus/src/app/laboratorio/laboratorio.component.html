@@ -14,16 +14,13 @@
             </tr>
           </thead>
           <tbody>
-
-
-            <tr>
-              <th scope="row">3</th>
-              <td>Bootstrap Flexbox Tutorial and Examples</td>
-              <td>30000</td>
-
+            <tr *ngFor="let laboratorio of laboratorios">
+              <th>{{ laboratorio.id }}</th>
+              <td>{{ laboratorio.nombre }}</td>
+              <td>{{ laboratorio.descripcion }}</td>
               <td>
-                <button type="button" data-toggle="modal" data-target="#editalModallaboratorio"class="btn btn-success"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                <button type="button" data-toggle="modal" data-target="#editalModallaboratorio" class="btn btn-success" (click)="updateboratorio()"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger" (click)="DeleLaboratorio()"><i class="far fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>
@@ -81,17 +78,17 @@
           <h4>Editar Laboratorio</h4>
         </div>
         <div class="d-flex flex-column text-center">
-          <form>
+          <form [formGroup]="ediform">
             <div class="form-group">
               <label for="nombre">Nombre:</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre1">
             </div>
 
             <div class="form-group">
               <label for="Descripcion">Descripción:</label>
-              <input type="text" class="form-control" id="Descripcion" placeholder="Descripción">
+              <input type="text" class="form-control" id="Descripcion" placeholder="Descripción1">
             </div>
-            <button type="button" class="buton btn btn-success">Guardar</button>
+            <button type="button" class="buton btn btn-success" (click)="saveLaboratorio()">Guardar</button>
             <button type="button" class="buton btn btn-danger">Cerrar</button>
           </form>
         </div>

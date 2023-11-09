@@ -51,6 +51,7 @@ export class checkinComponent implements OnInit{
     console.log("dataClient to save {} ", this.Dataregistre);
 
     this.authService.Registrar(this.Dataregistre).subscribe(response => {
+
       if (response instanceof HttpResponse) {
           if (response.status === 200) {
               alert("Save success");

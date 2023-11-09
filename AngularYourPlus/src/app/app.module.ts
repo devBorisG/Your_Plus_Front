@@ -13,7 +13,6 @@ import { checkinComponent } from './checkin/check.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductoComponent } from './producto/producto.component';
-import { ListProductosComponent } from './list-productos/list-productos.component';
 import { HomeproductoComponent} from './homeproducto/homeproducto.component';
 import { RegistrarproductoComponent } from './registrarproducto/registrarproducto.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,7 +29,6 @@ import { LaboratorioComponent } from './laboratorio/laboratorio.component';
     checkinComponent,
     LoginComponent,
     ProductoComponent,
-    ListProductosComponent,
     HomeproductoComponent,
     RegistrarproductoComponent,
     LaboratorioComponent,
