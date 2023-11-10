@@ -18,7 +18,7 @@ export class ProductoService {
   }
 
   public getProductos(params: any): Observable<Object> {
-    return this.http.get(`${productourl}`, { params, observe: 'response' });
+    return this.http.get(`${productourl}`/*, { params, observe: 'response' }*/);
   }
 
   public updateProducto(productoId: string, producto: Producto): Observable<Object> {

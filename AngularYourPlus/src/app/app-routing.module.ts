@@ -4,10 +4,19 @@ import { RegistrarproductoComponent } from './registrarproducto/registrarproduct
 import { ProductoComponent } from './producto/producto.component';
 import { HomeproductoComponent } from './homeproducto/homeproducto.component';
 import { LaboratorioComponent } from './laboratorio/laboratorio.component';
+import { HeaderComponent } from './header/header.component';
 
 
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule]
-// })
+const routes: Routes = [
+  {path:'', component:HeaderComponent},
+  {path: 'producto', component: ProductoComponent},
+  {path: 'homeproducto', component: HomeproductoComponent},
+  {path: 'registarproducto', component: RegistrarproductoComponent},
+  {path: 'laboratorio', component: LaboratorioComponent},
+];
+
+@NgModule({
+   imports: [RouterModule.forRoot(routes)],
+   exports: [RouterModule]
+})
 export class AppRoutingModule { }

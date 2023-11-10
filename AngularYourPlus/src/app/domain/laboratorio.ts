@@ -1,6 +1,6 @@
-export class Laboratorio{
-  id: string;
-  nombre: string;
-  descripcion: string;
+export class Laboratorio {
+  nombre:string;
+  descripcion:string;
+  iden:string;
 
 }

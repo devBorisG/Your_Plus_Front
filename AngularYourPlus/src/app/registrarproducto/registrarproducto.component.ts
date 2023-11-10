@@ -3,6 +3,9 @@ import { Producto } from '../domain/producto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import { ProductoService } from './service/registrarproducto.service';
+import { resolve4 } from 'dns';
+import { Categoria } from '../domain/categoria';
+import { Laboratorio } from '../domain/laboratorio';
 
 @Component({
   selector: 'app-registrarproducto',
@@ -44,8 +47,9 @@ export class RegistrarproductoComponent implements OnInit {
 
   public getProductos(): void {
     this.productoService.getProductos(this.registrarproducto.value).subscribe(response => {
-      if (response instanceof HttpResponse && response.status === 200) {
-        this.productos = response.body as Producto[];
+      console.log(response);
+      if (response['messageList'][0].level === 'SUCCESS') {
+        this.productos = response['data'] as Producto[];
       } else {
         console.log("Error obtaining products");
         this.productos = [];
@@ -60,13 +64,13 @@ export class RegistrarproductoComponent implements OnInit {
     if (this.registrarproducto.invalid) {
       return;
     }
-
+    const categoria = new Categoria("e1b9e203-ebca-4b92-af74-39ab5054fc6b","creatina","");
     // Assign form values to DataProducto object
     this.DataProducto.nombre = this.registrarproducto.get("nombre").value;
     this.DataProducto.precio = this.registrarproducto.get("precio").value;
     this.DataProducto.descripcion = this.registrarproducto.get("descripcion").value;
     this.DataProducto.imagen = this.registrarproducto.get("imagen").value;
-    this.DataProducto.categoria = this.registrarproducto.get("categoria").value;
+    this.DataProducto.categoria = categoria;
     this.DataProducto.laboratorio = this.registrarproducto.get("laboratorio").value;
 
     // Save or update depending on whether DataProducto has an ID

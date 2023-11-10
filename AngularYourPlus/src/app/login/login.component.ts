@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       (res) => {
         console.log(res['token']);
         // this.auth.saveToken(res['token']);
-        this.router.navigate(['producto']); // Redirige a la página después de iniciar sesión
+        this.router.navigate(['/producto']); // Redirige a la página después de iniciar sesión
       },
       (error) => {
         // Maneja errores
