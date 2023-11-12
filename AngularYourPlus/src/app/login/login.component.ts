@@ -12,11 +12,9 @@ import { CredentialPersona } from '../domain/credentialpersona';
 })
 export class LoginComponent implements OnInit {
   constructor(
-    private _cargarScripts: CargarScriptsService,
     private auth: AuthService,
     private router: Router
   ) {
-    _cargarScripts.carga(['popup-login']);
   }
 
   persona: FormGroup = new FormGroup({

@@ -17,7 +17,6 @@ import { HomeproductoComponent} from './homeproducto/homeproducto.component';
 import { RegistrarproductoComponent } from './registrarproducto/registrarproducto.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LaboratorioComponent } from './laboratorio/laboratorio.component';
-import { RouterModule,Routes } from '@angular/router';
 
 
 @NgModule({
