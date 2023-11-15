@@ -77,7 +77,7 @@
               <td>{{ producto.categoria.nombre }}</td>
               <td>{{ producto.laboratorio.nombre }}</td>
               <td>
-                <button type="button" data-toggle="modal" data-target="#editalModal" class="btn btn-success" (click)="updateProducto(producto)"><i class="fas fa-edit"></i></button>
+                <button type="button" data-toggle="modal" data-target="#editalModal" class="btn btn-success" (click)="putInfoUpdateProducto(producto)"><i class="fas fa-edit"></i></button>
                 <button type="button" class="btn btn-danger" (click)="Deleteproducto(producto)"><i class="far fa-trash-alt"></i></button>
               </td>
             </tr>
@@ -121,17 +121,17 @@
               <label for="categoria">Categoría:</label>
               <select class="form-control" id="categoria">
                 <option value="">Selecciona una categoría</option>
-                <option value="opcion1">creatina</option>
+                <option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</option>
               </select>
             </div>
             <div class="form-group">
               <label for="Laboratorio">Laboratorio:</label>
               <select class="form-control" id="Laboratorio">
                 <option value="">Selecciona un laboratorio</option>
-                <option value="opcion1">productLabs</option>
+                <option *ngFor="let laboratorio of laboratorios" [value]="laboratorio.id">{{laboratorio.nombre}}</option>
               </select>
             </div>
-            <button type="button" class="buton btn btn-success" (click)="saveProducto()">Guardar</button>
+            <button type="button" class="buton btn btn-success" (click)="updateProducto()">Guardar</button>
             <button type="button" class="buton btn btn-danger">Cerrar</button>
           </form>
         </div>

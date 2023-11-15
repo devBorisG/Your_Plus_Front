@@ -20,15 +20,15 @@ export class RegistrarproductoComponent implements OnInit {
   laboratorios: Laboratorio[];
   productos: Producto[] = [];
   DataProducto: Producto;
-  DataCategoria : Categoria;
+  DataCategoria: Categoria;
   editarproducto: FormGroup;
   registrarproducto: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-      private productoService: ProductoService,
-      private auth: AuthService,
-      private categoriaService: CategoriaService,
-      private laboratorioService: LaboratorioService) {}
+    private productoService: ProductoService,
+    private auth: AuthService,
+    private categoriaService: CategoriaService,
+    private laboratorioService: LaboratorioService) { }
 
   ngOnInit(): void {
     this.getObjects();
@@ -37,9 +37,9 @@ export class RegistrarproductoComponent implements OnInit {
       nombre: ['', Validators.required],
       precio: ['', Validators.required],
       descripcion: ['', Validators.required],
-      imagen: [''],
-      categoria: [''],
-      laboratorio: [''],
+      imagen: ['', Validators.required],
+      categoria: ['', Validators.required],
+      laboratorio: ['', Validators.required],
     });
 
     // Initialize the edit form
@@ -55,12 +55,12 @@ export class RegistrarproductoComponent implements OnInit {
     this.getProductos();
   }
 
-  public getObjects(): void{
+  public getObjects(): void {
     this.getCategorias();
     this.getLaboratorios();
   }
 
-  public getLaboratorios(): void{
+  public getLaboratorios(): void {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.auth.getToken()}`
     });
@@ -69,7 +69,7 @@ export class RegistrarproductoComponent implements OnInit {
         if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
           this.laboratorios = response['data'] as Laboratorio[];
         } else {
-          console.error("Error obtaining categories");
+          console.error(response['messageList'][0].content);
           this.laboratorios = [];
         }
       }, error => {
@@ -88,7 +88,7 @@ export class RegistrarproductoComponent implements OnInit {
         if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
           this.categorias = response['data'] as Categoria[];
         } else {
-          console.error("Error obtaining categories");
+          console.error(response['messageList'][0].content);
           this.categorias = [];
         }
       }, error => {
@@ -103,7 +103,7 @@ export class RegistrarproductoComponent implements OnInit {
       if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
         this.productos = response['data'] as Producto[];
       } else {
-        console.error("Error obtaining products");
+        console.error(response['messageList'][0].content);
         this.productos = [];
       }
     }, error => {
@@ -124,26 +124,21 @@ export class RegistrarproductoComponent implements OnInit {
     this.DataProducto.precio = this.registrarproducto.get("precio").value;
     this.DataProducto.descripcion = this.registrarproducto.get("descripcion").value;
     this.DataProducto.imagen = this.registrarproducto.get("imagen").value;
-    this.DataProducto.categoria = this.registrarproducto.get("categoria").value;
-    this.DataProducto.laboratorio = this.registrarproducto.get("laboratorio").value;
+    this.DataProducto.categoria.id = this.registrarproducto.get("categoria").value;
+    this.DataProducto.laboratorio.id = this.registrarproducto.get("laboratorio").value;
 
-    // Save or update depending on whether DataProducto has an ID
-    if (this.DataProducto.id) {
-      this.updateProducto();
-    } else {
-      this.productoService.saveProducto(this.DataProducto, headers).subscribe(response => {
-        if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
-          alert(response['messageList'][0].content);
-          this.registrarproducto.reset();
-          this.getProductos();
-        } else {
-          alert("Intenta nuevamente");
-        }
-      }, error => {
-        alert("Service error: " + error);
-        console.error("Error post: ", error);
-      });
-    }
+    this.productoService.saveProducto(this.DataProducto, headers).subscribe(response => {
+      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
+        alert(response['messageList'][0].content);
+        this.registrarproducto.reset();
+        this.getProductos();
+      } else {
+        alert(response['messageList'][0].content);
+      }
+    }, error => {
+      alert("Service error: " + error);
+      console.error("Error post: ", error);
+    });
   }
 
   public Deleteproducto(producto: Producto): void {
@@ -157,34 +152,46 @@ export class RegistrarproductoComponent implements OnInit {
         }
       }, error => {
         alert("Service delete error:" + error);
-        console.log("Error delete {} ", error);
+        console.log("Error delete", error);
       });
     }
   }
 
+  public putInfoUpdateProducto(producto: Producto): void {
+    this.editarproducto.patchValue({
+      nombre: producto.nombre,
+      precio: producto.precio,
+      descripcion: producto.descripcion,
+      imagen: producto.imagen,
+      categoria: producto.categoria,
+      laboratorio: producto.laboratorio,
+    });
+  }
+
   public updateProducto(): void {
-    if (this.DataProducto.nombre) {
-      let productoId = this.DataProducto.nombre;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.auth.getToken()}`,
+      'Content-Type': 'application/json'
+    });
 
-      // Update only fields that have a value in the edit form
-      this.DataProducto.nombre = this.editarproducto.get("nombre").value || this.DataProducto.nombre;
-      this.DataProducto.precio = this.editarproducto.get("precio").value || this.DataProducto.precio;
-      this.DataProducto.descripcion = this.editarproducto.get("descripcion").value || this.DataProducto.descripcion;
-      this.DataProducto.imagen = this.editarproducto.get("imagen").value || this.DataProducto.imagen;
-      this.DataProducto.categoria = this.editarproducto.get("categoria").value || this.DataProducto.categoria;
-      this.DataProducto.laboratorio = this.editarproducto.get("laboratorio").value || this.DataProducto.laboratorio;
+    // Assign form values to DataProducto object
+    this.DataProducto.nombre = this.editarproducto.get("nombre").value || this.DataProducto.nombre;
+    this.DataProducto.precio = this.editarproducto.get("precio").value || this.DataProducto.precio;
+    this.DataProducto.descripcion = this.editarproducto.get("descripcion").value || this.DataProducto.descripcion;
+    this.DataProducto.imagen = this.editarproducto.get("imagen").value || this.DataProducto.imagen;
+    this.DataProducto.categoria.id = this.editarproducto.get("categoria").value || this.DataProducto.categoria;
+    this.DataProducto.laboratorio.id = this.editarproducto.get("laboratorio").value || this.DataProducto.laboratorio;
 
-      this.productoService.updateProducto(productoId, this.DataProducto).subscribe(response => {
-        if (response instanceof HttpResponse && response.status === 200) {
-          alert("Update success");
-          this.getProductos();
-        } else {
-          alert("Update error");
-        }
-      }, error => {
-        alert("Service update error:" + error);
-        console.log("Error update {} ", error);
-      });
-    }
+    this.productoService.updateProducto(this.DataProducto, headers).subscribe(response => {
+      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
+        alert(response['messageList'][0].content);
+        this.getProductos();
+      } else {
+        alert(response['messageList'][0].content);
+      }
+    }, error => {
+      alert("Service update error:" + error);
+      console.log("Error update {} ", error);
+    });
   }
 }

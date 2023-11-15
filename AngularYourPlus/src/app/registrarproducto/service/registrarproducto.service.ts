@@ -25,9 +25,12 @@ export class ProductoService {
     return this.http.get(`${productourl}`/*, { params, observe: 'response' }*/);
   }
 
-  public updateProducto(productoId: string, producto: Producto): Observable<Object> {
-    let params = { "productoId": productoId };
-    return this.http.put(`${productourl}`, producto, { params, observe: 'response' });
+  public updateProducto(producto: Producto, headers: HttpHeaders): Observable<Object> {
+    const options = {
+      headers: headers,
+      observe: 'response' as const,
+    };
+    return this.http.put(`${productourl}/${producto.id}`, producto, options);
   }
 
   public Deleteproducto(productonombre: string): Observable<any> {
