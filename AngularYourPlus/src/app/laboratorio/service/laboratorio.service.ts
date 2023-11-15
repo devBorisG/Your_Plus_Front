@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Laboratorio } from 'src/app/domain/laboratorio';
 
@@ -14,9 +14,13 @@ export class LaboratorioService {
 
     constructor(private http: HttpClient) { }
 
-    public getLaboratorio(params: any): Observable<Object> {
-      return this.http.get(`${laboratorioUrl}`, { params, observe: 'response' });
-  }
+    public getLaboratorio(headers: HttpHeaders): Observable<Object> {
+      const options = {
+        headers: headers,
+        observe: 'response' as const,
+      };
+      return this.http.get(`${laboratorioUrl}`, options);
+    }
 
     public saveLaboratorio(laboratorio: Laboratorio): Observable<Object>  {
 

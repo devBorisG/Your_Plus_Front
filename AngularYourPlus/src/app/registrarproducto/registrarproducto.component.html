@@ -32,18 +32,14 @@
               <label for="categoria">Categoría:</label>
               <select class="form-control" id="categoria" formControlName="categoria">
                 <option value="">Selecciona una categoría</option>
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
+                <option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}</option>
               </select>
             </div>
             <div class="form-group">
               <label for="Laboratorio">Laboratorio:</label>
               <select class="form-control" id="Laboratorio" formControlName="laboratorio">
                 <option value="">Selecciona un laboratorio</option>
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
+                <option *ngFor="let laboratorio of laboratorios" [value]="laboratorio.id">{{laboratorio.nombre}}</option>
               </select>
             </div>
             <button type="button" class="buton btn btn-success" (click)="saveProducto()">Guardar</button>

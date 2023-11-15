@@ -10,6 +10,7 @@ export const environment = {
   urllaboratorio: `${urlBase}/yourplus/v1/laboratorios`,
   urlpersona: `${urlBase}/yourplus/v1/personas`,
   urlproducto: `${urlBase}/yourplus/v1/productos`,
+  urlcategoria: `${urlBase}/yourplus/v1/categorias`,
 };
 
 /*

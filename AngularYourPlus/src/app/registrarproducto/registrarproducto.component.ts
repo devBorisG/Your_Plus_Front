@@ -3,10 +3,11 @@ import { Producto } from '../domain/producto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ProductoService } from './service/registrarproducto.service';
-import { resolve4 } from 'dns';
 import { Categoria } from '../domain/categoria';
 import { Laboratorio } from '../domain/laboratorio';
 import { AuthService } from '../login/service/login.service';
+import { CategoriaService } from '../categoria/service/categoria.service';
+import { LaboratorioService } from '../laboratorio/service/laboratorio.service';
 
 @Component({
   selector: 'app-registrarproducto',
@@ -15,14 +16,22 @@ import { AuthService } from '../login/service/login.service';
 })
 export class RegistrarproductoComponent implements OnInit {
 
+  categorias: Categoria[];
+  laboratorios: Laboratorio[];
   productos: Producto[] = [];
   DataProducto: Producto;
+  DataCategoria : Categoria;
   editarproducto: FormGroup;
   registrarproducto: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private productoService: ProductoService, private auth: AuthService) {}
+  constructor(private formBuilder: FormBuilder,
+      private productoService: ProductoService,
+      private auth: AuthService,
+      private categoriaService: CategoriaService,
+      private laboratorioService: LaboratorioService) {}
 
   ngOnInit(): void {
+    this.getObjects();
     this.DataProducto = new Producto();
     this.registrarproducto = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -46,6 +55,49 @@ export class RegistrarproductoComponent implements OnInit {
     this.getProductos();
   }
 
+  public getObjects(): void{
+    this.getCategorias();
+    this.getLaboratorios();
+  }
+
+  public getLaboratorios(): void{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.auth.getToken()}`
+    });
+    this.laboratorioService.getLaboratorio(headers).subscribe(
+      (response) => {
+        if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
+          this.laboratorios = response['data'] as Laboratorio[];
+        } else {
+          console.error("Error obtaining categories");
+          this.laboratorios = [];
+        }
+      }, error => {
+        console.error("Error in the request: ", error);
+        this.laboratorios = [];
+      }
+    );
+  }
+
+  public getCategorias(): void {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.auth.getToken()}`
+    });
+    this.categoriaService.getCategoria(headers).subscribe(
+      (response) => {
+        if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
+          this.categorias = response['data'] as Categoria[];
+        } else {
+          console.error("Error obtaining categories");
+          this.categorias = [];
+        }
+      }, error => {
+        console.error("Error in the request: ", error);
+        this.categorias = [];
+      }
+    );
+  }
+
   public getProductos(): void {
     this.productoService.getProductos(this.registrarproducto.value).subscribe(response => {
       if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
@@ -67,13 +119,12 @@ export class RegistrarproductoComponent implements OnInit {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.auth.getToken()}`
     });
-    const categoria = new Categoria("e1b9e203-ebca-4b92-af74-39ab5054fc6b","creatina","");
     // Assign form values to DataProducto object
     this.DataProducto.nombre = this.registrarproducto.get("nombre").value;
     this.DataProducto.precio = this.registrarproducto.get("precio").value;
     this.DataProducto.descripcion = this.registrarproducto.get("descripcion").value;
     this.DataProducto.imagen = this.registrarproducto.get("imagen").value;
-    this.DataProducto.categoria = categoria;
+    this.DataProducto.categoria = this.registrarproducto.get("categoria").value;
     this.DataProducto.laboratorio = this.registrarproducto.get("laboratorio").value;
 
     // Save or update depending on whether DataProducto has an ID
