@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Producto } from 'src/app/domain/producto';
 
@@ -13,8 +13,12 @@ export class ProductoService {
 
   constructor(private http: HttpClient) { }
 
-  public saveProducto(producto: Producto): Observable<Object> {
-    return this.http.post(`${productourl}`, producto, { observe: 'response' });
+  public saveProducto(producto: Producto, headers: HttpHeaders): Observable<Object> {
+    const options = {
+      headers: headers,
+      observe: 'response' as const,
+    };
+    return this.http.post(`${productourl}`, producto, options);
   }
 
   public getProductos(params: any): Observable<Object> {

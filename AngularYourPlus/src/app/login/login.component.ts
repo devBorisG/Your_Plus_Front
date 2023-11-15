@@ -36,11 +36,11 @@ export class LoginComponent implements OnInit {
     this.auth.authenticate(from).subscribe(
       (res) => {
         console.log(res['token']);
-        // this.auth.saveToken(res['token']);
+        this.auth.saveToken(res['token']);
         this.router.navigate(['/producto']); // Redirige a la página después de iniciar sesión
       },
       (error) => {
-        // Maneja errores
+        alert("Ocurrio un error manejando la sesion actual")
       },
       () => {
         this.loading = false; // Restablece el estado del botón
