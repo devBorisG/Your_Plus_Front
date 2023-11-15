@@ -22,11 +22,12 @@ export class LaboratorioService {
       return this.http.get(`${laboratorioUrl}`, options);
     }
 
-    public saveLaboratorio(laboratorio: Laboratorio): Observable<Object>  {
-
-      return this.http.post(`${laboratorioUrl}`, laboratorio, { observe: 'response' });
-
-
+    public saveLaboratorio(laboratorio: Laboratorio, headers: HttpHeaders): Observable<Object>  {
+      const options = {
+        headers: headers,
+        observe: 'response' as const,
+      };
+      return this.http.post(`${laboratorioUrl}`, laboratorio, options);
     }
 
     public updateboratorio(laboratoriotId: string, laboratorio: Laboratorio): Observable<Object> {

@@ -141,7 +141,7 @@ export class RegistrarproductoComponent implements OnInit {
         }
       }, error => {
         alert("Service error: " + error);
-        console.log("Error post: ", error);
+        console.error("Error post: ", error);
       });
     }
   }
