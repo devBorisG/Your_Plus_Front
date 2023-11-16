@@ -8,7 +8,6 @@ import { Laboratorio } from '../domain/laboratorio';
 import { AuthService } from '../login/service/login.service';
 import { CategoriaService } from '../categoria/service/categoria.service';
 import { LaboratorioService } from '../laboratorio/service/laboratorio.service';
-import Swal from 'sweetalert2';
 
 
 @Component({
@@ -30,10 +29,19 @@ export class RegistrarproductoComponent implements OnInit {
     private productoService: ProductoService,
     private auth: AuthService,
     private categoriaService: CategoriaService,
-    private laboratorioService: LaboratorioService) { }
+    private laboratorioService: LaboratorioService) {
+      // Initialize the edit form
+      this.editarproducto = this.formBuilder.group({
+        nombre: [''],
+        precio: [''],
+        descripcion: [''],
+        imagen: [''],
+        categoria: [''],
+        laboratorio: [''],
+      });
+    }
 
   ngOnInit(): void {
-    this.getObjects();
     this.DataProducto = new Producto();
     this.registrarproducto = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -44,16 +52,7 @@ export class RegistrarproductoComponent implements OnInit {
       laboratorio: ['', Validators.required],
     });
 
-    // Initialize the edit form
-    this.editarproducto = this.formBuilder.group({
-      nombre: [''],
-      precio: [''],
-      descripcion: [''],
-      imagen: [''],
-      categoria: [''],
-      laboratorio: [''],
-    });
-
+    this.getObjects();
     this.getProductos();
   }
 
@@ -67,11 +66,11 @@ export class RegistrarproductoComponent implements OnInit {
       Authorization: `Bearer ${this.auth.getToken()}`
     });
     this.laboratorioService.getLaboratorio(headers).subscribe(
-      (response) => {
-        if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
-          this.laboratorios = response['data'] as Laboratorio[];
+      response => {
+        if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+          this.laboratorios = response.body.data as Laboratorio[];
         } else {
-          console.error(response['messageList'][0].content);
+          console.error(response.body.messageList[0].content);
           this.laboratorios = [];
         }
       }, error => {
@@ -86,11 +85,11 @@ export class RegistrarproductoComponent implements OnInit {
       Authorization: `Bearer ${this.auth.getToken()}`
     });
     this.categoriaService.getCategoria(headers).subscribe(
-      (response) => {
-        if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
-          this.categorias = response['data'] as Categoria[];
+      response => {
+        if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+          this.categorias = response.body.data as Categoria[];
         } else {
-          console.error(response['messageList'][0].content);
+          console.error(response.body.messageList[0].content);
           this.categorias = [];
         }
       }, error => {
@@ -102,10 +101,10 @@ export class RegistrarproductoComponent implements OnInit {
 
   public getProductos(): void {
     this.productoService.getProductos(this.registrarproducto.value).subscribe(response => {
-      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
-        this.productos = response['data'] as Producto[];
+      if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        this.productos = response.body.data as Producto[];
       } else {
-        console.error(response['messageList'][0].content);
+        console.error("error");
         this.productos = [];
       }
     }, error => {
@@ -170,13 +169,12 @@ export class RegistrarproductoComponent implements OnInit {
     });
   }
   public putInfoUpdateProducto(producto: Producto): void {
+    console.log(producto)
     this.editarproducto.patchValue({
       nombre: producto.nombre,
       precio: producto.precio,
       descripcion: producto.descripcion,
-      imagen: producto.imagen,
-      categoria: producto.categoria,
-      laboratorio: producto.laboratorio,
+      imagen: producto.imagen
     });
   }
 

@@ -22,8 +22,11 @@ export class ProductoService {
     return this.http.post(`${productourl}`, producto, options);
   }
 
-  public getProductos(params: any): Observable<Object> {
-    return this.http.get(`${productourl}`/*, { params, observe: 'response' }*/);
+  public getProductos(params: any): Observable<any> {
+    const options = {
+      observe: 'response' as const,
+    };
+    return this.http.get(`${productourl}`/*, { params, observe: 'response' }*/, options);
   }
 
   public updateProducto(producto: Producto, headers: HttpHeaders): Observable<Object> {

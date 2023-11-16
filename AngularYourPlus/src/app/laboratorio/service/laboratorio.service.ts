@@ -13,7 +13,7 @@ export class LaboratorioService {
 private httpHeaders = new  HttpHeaders({'content-Type':'application/json'})
     constructor(private http: HttpClient) { }
 
-    public getLaboratorio(headers: HttpHeaders): Observable<Object> {
+    public getLaboratorio(headers: HttpHeaders): Observable<any> {
       const options = {
         headers: headers,
         observe: 'response' as const,
