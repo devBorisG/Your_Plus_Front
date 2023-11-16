@@ -32,17 +32,12 @@ import { LaboratorioComponent } from './laboratorio/laboratorio.component';
     HomeproductoComponent,
     RegistrarproductoComponent,
     LaboratorioComponent,
-
-
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
-
-
+    HttpClientModule,
   ],
   providers: [
     CargarScriptsService],

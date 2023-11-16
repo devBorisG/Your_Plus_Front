@@ -9,10 +9,11 @@ import { CargarScriptsService } from "../cargar-scripts.service";
 })
 export  class HeaderComponent implements OnInit{
   constructor(private _cargarScripts:CargarScriptsService){
-    _cargarScripts.carga(["menu-sroll"]);
+    _cargarScripts.carga(["menu-scroll"]);
   }
 
-  ngOnInit(): any {
+  ngOnInit(): void {
+    this._cargarScripts.carga(["menu-scroll"]);
   }
 
 }

@@ -1,26 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Laboratorio } from '../domain/laboratorio';
 import { LaboratorioService } from './service/laboratorio.service';
+
 import { Config } from 'protractor';
 import { AuthService } from '../login/service/login.service';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-laboratorio',
   templateUrl: './laboratorio.component.html',
   styleUrls: ['./laboratorio.component.css']
 })
-export class LaboratorioComponent {
+export class LaboratorioComponent implements OnInit {
 
   laboratorios: Laboratorio[] = [];
   DataLaboratorio: Laboratorio;
   laboratorioform: FormGroup;
   ediform: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private laboratorioService: LaboratorioService) {}
+  constructor(private auth: AuthService,private formBuilder: FormBuilder, private laboratorioService: LaboratorioService) {}
 
   ngOnInit(): void {
     this.DataLaboratorio = new Laboratorio();
@@ -33,7 +33,7 @@ export class LaboratorioComponent {
 
   public getLaboratorio(): void {
     this.laboratorioService.getLaboratorio(this.laboratorioform.value).subscribe(response => {
-      if (response instanceof HttpResponse && response.status === 200) {
+      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
         this.laboratorios = response.body as Laboratorio[];
       } else {
         console.log("Error obtaining products");
@@ -49,26 +49,25 @@ export class LaboratorioComponent {
     if (this.laboratorioform.invalid) {
       return;
     }
-
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.auth.getToken()}`
+    });
     this.DataLaboratorio = new Laboratorio();
     this.DataLaboratorio.nombre = this.laboratorioform.get("nombre").value;
     this.DataLaboratorio.descripcion = this.laboratorioform.get("descripcion").value;
 
-    this.laboratorioService.saveLaboratorio(this.DataLaboratorio).subscribe(response => {
-      if (response instanceof HttpResponse) {
-        if (response.status === 200) {
-          alert("Save success");
-          this.laboratorioform.reset();
-        } else {
-          alert("Save error");
-        }
-      } else {
-        // Manejo de respuesta inesperada
-        alert("Unexpected response");
+    this.laboratorioService.saveLaboratorio(this.DataLaboratorio, headers).subscribe(response => {
+      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
+        alert(response['messageList'][0].content);
+        this.laboratorioform.reset();
+        this.getLaboratorio()
+      }
+      else {
+        alert("Save error");
       }
     }, error => {
       alert("Service error: " + error);
-      console.log("Error post: ", error);
+      console.error("Error post: ", error);
     });
   }
 

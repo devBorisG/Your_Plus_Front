@@ -6,10 +6,11 @@ const urlBase = 'http://localhost:8080';
 export const environment = {
   production: true,
   url: `${urlBase}`,
-  urlautentication: `${urlBase}/authenticate`,
+  urlautentication: `${urlBase}/yourplus/v1/personas/authenticate`,
   urllaboratorio: `${urlBase}/yourplus/v1/laboratorios`,
   urlpersona: `${urlBase}/yourplus/v1/personas`,
   urlproducto: `${urlBase}/yourplus/v1/productos`,
+  urlcategoria: `${urlBase}/yourplus/v1/categorias`,
 };
 
 /*
