@@ -13,7 +13,7 @@ export class ProductoService {
 
   constructor(private http: HttpClient) { }
 
-  public saveProducto(producto: Producto, headers: HttpHeaders): Observable<Object> {
+  public saveProducto(producto: Producto, headers: HttpHeaders): Observable<any> {
     const options = {
       headers: headers,
       observe: 'response' as const,
@@ -28,16 +28,20 @@ export class ProductoService {
     return this.http.get(`${productourl}`/*, { params, observe: 'response' }*/, options);
   }
 
-  public updateProducto(producto: Producto, headers: HttpHeaders): Observable<Object> {
+  public updateProducto(producto: Producto, headers: HttpHeaders): Observable<any> {
     const options = {
       headers: headers,
       observe: 'response' as const,
     };
-    return this.http.put(`${productourl}/${producto.id}`, producto, options);
+    return this.http.put(`${productourl}`, producto, options);
   }
 
-  public Deleteproducto(productonombre: string): Observable<any> {
-    let params = { "productonombre": productonombre };
+  public Deleteproducto(id: string, headers: HttpHeaders): Observable<any> {
+    const options = {
+      headers: headers,
+      observe: 'response' as const,
+    };
+    let params = { "id": id };
     return this.http.delete(`${productourl}`, { params, observe: 'response' });
   }
 }

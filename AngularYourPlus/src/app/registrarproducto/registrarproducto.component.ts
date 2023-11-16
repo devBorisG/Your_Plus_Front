@@ -9,6 +9,7 @@ import { AuthService } from '../login/service/login.service';
 import { CategoriaService } from '../categoria/service/categoria.service';
 import { LaboratorioService } from '../laboratorio/service/laboratorio.service';
 import { copyFileSync } from 'fs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrarproducto',
@@ -29,15 +30,17 @@ export class RegistrarproductoComponent implements OnInit {
     private productoService: ProductoService,
     private auth: AuthService,
     private categoriaService: CategoriaService,
-    private laboratorioService: LaboratorioService) {
+    private laboratorioService: LaboratorioService,
+    private router: Router) {
       // Initialize the edit form
-      this.editarproducto = this.formBuilder.group({
+    this.editarproducto = this.formBuilder.group({
         nombre: [''],
         precio: [''],
         descripcion: [''],
         imagen: [''],
         categoria: [''],
         laboratorio: [''],
+        id: [''],
       });
     }
 
@@ -100,8 +103,14 @@ export class RegistrarproductoComponent implements OnInit {
   }
 
   public getProductos(): void {
-    this.productoService.getProductos(this.registrarproducto.value).subscribe(response => {
+    const producto = new Producto();
+    this.productoService.getProductos(producto).subscribe(response => {
       if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        const lista = response.body.data;
+        for (let i = 0; i < lista.length; i++) {
+          const element = lista[i];
+          console.log(element);
+        }
         this.productos = response.body.data as Producto[];
       } else {
         console.error("error");
@@ -129,12 +138,12 @@ export class RegistrarproductoComponent implements OnInit {
     this.DataProducto.laboratorio.id = this.registrarproducto.get("laboratorio").value;
 
     this.productoService.saveProducto(this.DataProducto, headers).subscribe(response => {
-      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
-        alert(response['messageList'][0].content);
+      if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        alert(response.body.messageList[0].content);
         this.registrarproducto.reset();
-        this.getProductos();
+        this.productos.push(this.DataProducto);
       } else {
-        alert(response['messageList'][0].content);
+        alert(response.body.messageList[0].content);
       }
     }, error => {
       alert("Service error: " + error);
@@ -143,13 +152,16 @@ export class RegistrarproductoComponent implements OnInit {
   }
 
   public Deleteproducto(producto: Producto): void {
-    if (producto && producto.nombre) {
-      this.productoService.Deleteproducto(producto.nombre).subscribe(response => {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.auth.getToken()}`
+    });
+    if (producto && producto.id) {
+      this.productoService.Deleteproducto(producto.id, headers).subscribe(response => {
         if (response instanceof HttpResponse && response.status === 200) {
-          alert("Delete success");
+          alert(response.body.messageList[0].content);
           this.getProductos(); // Reload the list after deletion
         } else {
-          alert("Delete error");
+          alert(response.body.messageList[0].content);
         }
       }, error => {
         alert("Service delete error:" + error);
@@ -159,8 +171,8 @@ export class RegistrarproductoComponent implements OnInit {
   }
 
   public putInfoUpdateProducto(producto: Producto): void {
-    console.log(producto)
     this.editarproducto.patchValue({
+      id: producto.id,
       nombre: producto.nombre,
       precio: producto.precio,
       descripcion: producto.descripcion,
@@ -175,6 +187,7 @@ export class RegistrarproductoComponent implements OnInit {
     });
 
     // Assign form values to DataProducto object
+    this.DataProducto.id = this.editarproducto.get("id").value;
     this.DataProducto.nombre = this.editarproducto.get("nombre").value || this.DataProducto.nombre;
     this.DataProducto.precio = this.editarproducto.get("precio").value || this.DataProducto.precio;
     this.DataProducto.descripcion = this.editarproducto.get("descripcion").value || this.DataProducto.descripcion;
@@ -183,11 +196,11 @@ export class RegistrarproductoComponent implements OnInit {
     this.DataProducto.laboratorio.id = this.editarproducto.get("laboratorio").value || this.DataProducto.laboratorio;
 
     this.productoService.updateProducto(this.DataProducto, headers).subscribe(response => {
-      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
-        alert(response['messageList'][0].content);
+      if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        alert(response.body.messageList[0].content);
         this.getProductos();
       } else {
-        alert(response['messageList'][0].content);
+        alert(response.body.messageList[0].content);
       }
     }, error => {
       alert("Service update error:" + error);

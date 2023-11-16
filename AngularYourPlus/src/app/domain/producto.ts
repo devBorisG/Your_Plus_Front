@@ -17,7 +17,7 @@ export class Producto{
       this.precio = precio || 0;
       this.descripcion = descripcion || '';
       this.imagen = imagen || '';
-      this.categoria = categoria || new Categoria;
-      this.laboratorio = laboratorio || new Laboratorio;
+      this.categoria = categoria || new Categoria();
+      this.laboratorio = laboratorio || new Laboratorio();
     }
 }
