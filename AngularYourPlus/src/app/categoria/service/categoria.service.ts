@@ -13,7 +13,7 @@ const categoriaUrl = environment.urlcategoria
 export class CategoriaService {
   constructor(private http: HttpClient){}
 
-  public getCategoria(headers: HttpHeaders): Observable<Object> {
+  public getCategoria(headers: HttpHeaders): Observable<any> {
     const options = {
       headers: headers,
       observe: 'response' as const,

@@ -13,7 +13,7 @@ export class LaboratorioService {
 private httpHeaders = new  HttpHeaders({'content-Type':'application/json'})
     constructor(private http: HttpClient) { }
 
-    public getLaboratorio(headers: HttpHeaders): Observable<Object> {
+    public getLaboratorio(headers: HttpHeaders): Observable<any> {
       const options = {
         headers: headers,
         observe: 'response' as const,
@@ -37,6 +37,6 @@ private httpHeaders = new  HttpHeaders({'content-Type':'application/json'})
     }
 
     public DeleteLaboratorio(id: string): Observable<Laboratorio> {
-      return this.http.delete<Laboratorio>(`${this.laboratorioUrl}/${id}`, {headers: this.httpHeaders});
+      return this.http.delete<Laboratorio>(`${laboratorioUrl}/${id}`, {headers: this.httpHeaders});
     }
 }
