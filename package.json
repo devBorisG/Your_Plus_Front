@@ -1,0 +1,17 @@
+{
+  "name": "app-yourplus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/core": "^17.0.3",
+    "@angular/forms": "^17.0.3",
+    "@sweetalert2/themes": "^5.0.15",
+    "typescript": "^5.2.2"
+  }
+}

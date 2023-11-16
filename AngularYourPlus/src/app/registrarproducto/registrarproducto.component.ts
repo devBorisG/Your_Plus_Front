@@ -8,6 +8,8 @@ import { Laboratorio } from '../domain/laboratorio';
 import { AuthService } from '../login/service/login.service';
 import { CategoriaService } from '../categoria/service/categoria.service';
 import { LaboratorioService } from '../laboratorio/service/laboratorio.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-registrarproducto',
@@ -140,23 +142,33 @@ export class RegistrarproductoComponent implements OnInit {
       console.error("Error post: ", error);
     });
   }
-
-  public Deleteproducto(producto: Producto): void {
-    if (producto && producto.nombre) {
-      this.productoService.Deleteproducto(producto.nombre).subscribe(response => {
-        if (response instanceof HttpResponse && response.status === 200) {
-          alert("Delete success");
-          this.getProductos(); // Reload the list after deletion
-        } else {
-          alert("Delete error");
-        }
-      }, error => {
-        alert("Service delete error:" + error);
-        console.log("Error delete", error);
-      });
-    }
+  delete(producto:Producto):void{
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: "Estas Seguro?",
+      text: `Sefuro que deseas eliminar el producto ${producto.nombre}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "si eliminar!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this.productoService.DeleteProducto(producto.id).subscribe(
+          response=>{
+            this.productos= this.productos.filter(cli=> cli !== producto)
+            Swal.fire( 'producto eliminado', `producto eliminado con exito ${producto.nombre} `, "success")
+          }
+        )
+      }
+    });
   }
-
   public putInfoUpdateProducto(producto: Producto): void {
     this.editarproducto.patchValue({
       nombre: producto.nombre,

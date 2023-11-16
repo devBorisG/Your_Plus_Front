@@ -11,6 +11,7 @@ const productourl = environment.urlproducto;
 })
 export class ProductoService {
 
+  private httpHeaders = new  HttpHeaders({'content-Type':'application/json'})
   constructor(private http: HttpClient) { }
 
   public saveProducto(producto: Producto, headers: HttpHeaders): Observable<Object> {
@@ -33,8 +34,7 @@ export class ProductoService {
     return this.http.put(`${productourl}/${producto.id}`, producto, options);
   }
 
-  public Deleteproducto(productonombre: string): Observable<any> {
-    let params = { "productonombre": productonombre };
-    return this.http.delete(`${productourl}`, { params, observe: 'response' });
+  public DeleteProducto(id: string): Observable<Producto> {
+    return this.http.delete<Producto>(`${productourl}/${id}`, {headers: this.httpHeaders});
   }
 }

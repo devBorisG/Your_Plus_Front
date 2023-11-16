@@ -37,6 +37,6 @@ private httpHeaders = new  HttpHeaders({'content-Type':'application/json'})
     }
 
     public DeleteLaboratorio(id: string): Observable<Laboratorio> {
-      return this.http.delete<Laboratorio>(`${this.laboratorioUrl}/${id}`, {headers: this.httpHeaders});
+      return this.http.delete<Laboratorio>(`${laboratorioUrl}/${id}`, {headers: this.httpHeaders});
     }
 }
