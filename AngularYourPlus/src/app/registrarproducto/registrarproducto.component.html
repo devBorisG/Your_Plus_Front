@@ -78,7 +78,7 @@
               <td>{{ producto.laboratorio.nombre }}</td>
               <td>
                 <button type="button" data-toggle="modal" data-target="#editalModal" class="btn btn-success" (click)="putInfoUpdateProducto(producto)"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger" (click)="Deleteproducto(producto)"><i class="far fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-danger" (click)="delete(producto)"><i class="far fa-trash-alt"></i></button>
               </td>
             </tr>
           </tbody>

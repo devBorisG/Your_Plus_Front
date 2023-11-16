@@ -18,7 +18,7 @@
               <td>{{ laboratorio.nombre }}</td>
               <td>{{ laboratorio.descripcion }}</td>
               <td>
-                <button type="button" data-toggle="modal" data-target="#editalModallaboratorio" class="btn btn-success" (click)="updateboratorio()"><i class="fas fa-edit"></i></button>
+                <button type="button" data-toggle="modal" data-target="#editalModallaboratorio" class="btn btn-success" (click)="putInfoUpdateProducto(laboratorio)"><i class="fas fa-edit"></i></button>
                 <button type="button" class="btn btn-danger" (click)="delete(laboratorio)"><i class="far fa-trash-alt"></i></button>
               </td>
           </tbody>
@@ -77,16 +77,17 @@
         </div>
         <div class="d-flex flex-column text-center">
           <form [formGroup]="ediform">
+            <input type="hidden" id="id" formControlName="id">
             <div class="form-group">
               <label for="nombre">Nombre:</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Nombre1">
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre1" ormControlName="nombre">
             </div>
 
             <div class="form-group">
               <label for="Descripcion">Descripción:</label>
-              <input type="text" class="form-control" id="Descripcion" placeholder="Descripción1">
+              <input type="text" class="form-control" id="Descripcion" placeholder="Descripción1" ormControlName="descripcion">
             </div>
-            <button type="button" class="buton btn btn-success" (click)="saveLaboratorio()">Guardar</button>
+            <button type="button" class="buton btn btn-success" (click)="updateProducto()">Guardar</button>
             <button type="button" class="buton btn btn-danger">Cerrar</button>
           </form>
         </div>

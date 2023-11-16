@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Laboratorio } from '../domain/laboratorio';
 import { LaboratorioService } from './service/laboratorio.service';
-
 import { Config } from 'protractor';
 import { AuthService } from '../login/service/login.service';
 import Swal from 'sweetalert2';
@@ -28,15 +27,21 @@ export class LaboratorioComponent implements OnInit {
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
     });
-    this.getLaboratorio();
+    this.getLaboratorios();
   }
-
-  public getLaboratorio(): void {
-    this.laboratorioService.getLaboratorio(this.laboratorioform.value).subscribe(response => {
-      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
-        this.laboratorios = response.body as Laboratorio[];
+   /* Esta parte se define la consulta de los  laboratorio */
+  public getLaboratorios(): void {
+    const laboratorio = new Laboratorio();
+    this.laboratorioService.getLaboratorios(laboratorio).subscribe(response => {
+      if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        const lista = response.body.data;
+        for (let i = 0; i < lista.length; i++) {
+          const element = lista[i];
+          console.log(element);
+        }
+        this.laboratorios = response.body.data as Laboratorio[];
       } else {
-        console.log("Error obtaining products");
+        console.error("error");
         this.laboratorios = [];
       }
     }, error => {
@@ -45,6 +50,8 @@ export class LaboratorioComponent implements OnInit {
     });
   }
 
+ /* Esta parte se define la creacion de un nuevo laboratorio */
+
   public saveLaboratorio(): void {
     if (this.laboratorioform.invalid) {
       return;
@@ -52,18 +59,16 @@ export class LaboratorioComponent implements OnInit {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.auth.getToken()}`
     });
-    this.DataLaboratorio = new Laboratorio();
     this.DataLaboratorio.nombre = this.laboratorioform.get("nombre").value;
     this.DataLaboratorio.descripcion = this.laboratorioform.get("descripcion").value;
 
     this.laboratorioService.saveLaboratorio(this.DataLaboratorio, headers).subscribe(response => {
-      if (response instanceof HttpResponse && response['messageList'][0].level === 'SUCCESS') {
-        alert(response['messageList'][0].content);
+      if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        alert(response.body.messageList[0].content);
         this.laboratorioform.reset();
-        this.getLaboratorio()
-      }
-      else {
-        alert("Save error");
+        this.laboratorios.push(this.DataLaboratorio);
+      } else {
+        alert(response.body.messageList[0].content);
       }
     }, error => {
       alert("Service error: " + error);
@@ -71,9 +76,7 @@ export class LaboratorioComponent implements OnInit {
     });
   }
 
-
-
-
+ /* Esta parte se define la eliminacion de el laboratorio */
   delete(laboratorio:Laboratorio):void{
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -102,33 +105,35 @@ export class LaboratorioComponent implements OnInit {
     });
   }
 
+ /* Esta parte se define la actualizacion de el laboratorio */
+  public putInfoUpdateProducto(laboratorio: Laboratorio): void {
+    this.ediform.patchValue({
+      id: laboratorio.id,
+      nombre: laboratorio.nombre,
+      descripcion: laboratorio.descripcion,
 
-
-
-
-
-
-  public updateboratorio(): void {
-    if (this.DataLaboratorio.nombre) {
-      let laboratorioId = this.DataLaboratorio.nombre;
-      this.DataLaboratorio.nombre = this.ediform.get("documentType").value ? this.ediform.get("nombre").value : this.DataLaboratorio.nombre;
-      this.DataLaboratorio.descripcion = this.ediform.get("documentNumber").value ? this.ediform.get("descripcion").value : this.DataLaboratorio.descripcion;
-
-      this.laboratorioService.updateboratorio(laboratorioId, this.DataLaboratorio).subscribe(response => {
-        if (response instanceof HttpResponse) {
-          if (response.status === 200) {
-            alert("Update success");
-          } else {
-            alert("Update error");
-          }
-        } else {
-          // Manejo de respuesta inesperada
-          alert("Unexpected response");
-        }
-      }, error => {
-        alert("Service update error:" + error);
-        console.log("Error update {} ", error);
-      });
-    }
+    });
   }
+
+  public updateProducto(): void {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.auth.getToken()}`,
+      'Content-Type': 'application/json'
+    });
+    this.DataLaboratorio.id = this.ediform.get("id").value;
+    this.DataLaboratorio.nombre = this.ediform.get("nombre").value || this.DataLaboratorio.nombre;
+    this.DataLaboratorio.descripcion = this.ediform.get("descripcion").value || this.DataLaboratorio.descripcion;
+    this.laboratorioService.updateboratorio(this.DataLaboratorio, headers).subscribe(response => {
+      if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        alert(response.body.messageList[0].content);
+        this.getLaboratorios();
+      } else {
+        alert(response.body.messageList[0].content);
+      }
+    }, error => {
+      alert("Service update error:" + error);
+      console.log("Error update {} ", error);
+    });
+  }
+
 }

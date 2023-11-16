@@ -10,7 +10,7 @@ const productourl = environment.urlproducto;
   providedIn: 'root'
 })
 export class ProductoService {
-
+  private httpHeaders = new  HttpHeaders({'content-Type':'application/json'})
   constructor(private http: HttpClient) { }
 
   public saveProducto(producto: Producto, headers: HttpHeaders): Observable<any> {
@@ -36,12 +36,11 @@ export class ProductoService {
     return this.http.put(`${productourl}`, producto, options);
   }
 
-  public Deleteproducto(id: string, headers: HttpHeaders): Observable<any> {
-    const options = {
-      headers: headers,
-      observe: 'response' as const,
-    };
-    let params = { "id": id };
-    return this.http.delete(`${productourl}`, { params, observe: 'response' });
+  public Deleteproducto(id: string): Observable<Producto> {
+
+
+    return this.http.delete<Producto>(`${productourl}/${id}`,  {headers: this.httpHeaders});
   }
+
+
 }
