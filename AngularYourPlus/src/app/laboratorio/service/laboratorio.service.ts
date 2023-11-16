@@ -20,20 +20,28 @@ private httpHeaders = new  HttpHeaders({'content-Type':'application/json'})
       };
       return this.http.get(`${laboratorioUrl}`, options);
     }
+    public getLaboratorios(params: any): Observable<any> {
+      const options = {
+        observe: 'response' as const,
+      };
+      return this.http.get(`${laboratorioUrl}`, options);
+    }
 
-    public saveLaboratorio(laboratorio: Laboratorio, headers: HttpHeaders): Observable<Object>  {
+
+    public saveLaboratorio(laboratorio: Laboratorio, headers: HttpHeaders): Observable<any>  {
       const options = {
         headers: headers,
         observe: 'response' as const,
       };
       return this.http.post(`${laboratorioUrl}`, laboratorio, options);
     }
+    public updateboratorio(laboratorio: Laboratorio, headers: HttpHeaders): Observable<any> {
+      const options = {
+        headers: headers,
+        observe: 'response' as const,
 
-    public updateboratorio(laboratoriotId: string, laboratorio: Laboratorio): Observable<Object> {
-        let params = {
-            "laboratoriotId": laboratoriotId
         }
-        return this.http.put(`${laboratorioUrl}`, laboratorio , { params, observe: 'response' });
+        return this.http.put(`${laboratorioUrl}`, laboratorio , options);
     }
 
     public DeleteLaboratorio(id: string): Observable<Laboratorio> {
