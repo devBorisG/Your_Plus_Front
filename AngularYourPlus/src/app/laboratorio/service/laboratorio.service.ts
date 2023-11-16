@@ -10,8 +10,7 @@ const laboratorioUrl = environment.urllaboratorio;
     providedIn: 'root'
 })
 export class LaboratorioService {
-
-
+private httpHeaders = new  HttpHeaders({'content-Type':'application/json'})
     constructor(private http: HttpClient) { }
 
     public getLaboratorio(params: any): Observable<Object> {
@@ -26,21 +25,13 @@ export class LaboratorioService {
     }
 
     public updateboratorio(laboratoriotId: string, laboratorio: Laboratorio): Observable<Object> {
-
         let params = {
             "laboratoriotId": laboratoriotId
         }
         return this.http.put(`${laboratorioUrl}`, laboratorio , { params, observe: 'response' });
-
     }
 
-    public DeleLaboratorio(laboratoriotId: string): Observable<any> {
-
-        let params = {
-            "laboratoriotId": laboratoriotId
-        }
-
-        return this.http.delete(`${laboratorioUrl}`, { params, observe: 'response' });
-
+    public DeleteLaboratorio(id: string): Observable<Laboratorio> {
+      return this.http.delete<Laboratorio>(`${this.laboratorioUrl}/${id}`, {headers: this.httpHeaders});
     }
 }

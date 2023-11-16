@@ -4,6 +4,9 @@ import { HttpResponse } from '@angular/common/http';
 import { Laboratorio } from '../domain/laboratorio';
 import { LaboratorioService } from './service/laboratorio.service';
 import { Config } from 'protractor';
+import { AuthService } from '../login/service/login.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-laboratorio',
@@ -69,27 +72,42 @@ export class LaboratorioComponent {
     });
   }
 
-  public DeleLaboratorio(laboratorio: Laboratorio): void {
-    if (laboratorio.nombre) {
-      this.laboratorioService.DeleLaboratorio(laboratorio.nombre).subscribe(response => {
-        if (response instanceof HttpResponse) {
-          if (response.status === 200) {
-            alert("Delete success");
-            this.laboratorioform.reset();
-            this.getLaboratorio(); // Actualiza la lista después de eliminar un laboratorio
-          } else {
-            alert("Delete error");
+
+
+
+  delete(laboratorio:Laboratorio):void{
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: "Estas Seguro?",
+      text: `Sefuro que deseas eliminar el laboratorio ${laboratorio.nombre}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "si eliminar!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this.laboratorioService.DeleteLaboratorio(laboratorio.id).subscribe(
+          response=>{
+            this.laboratorios= this.laboratorios.filter(cli=> cli !== laboratorio)
+            Swal.fire( 'laboratorio eliminado', `laboratorio eliminado con exito ${laboratorio.nombre} `, "success")
           }
-        } else {
-          // Manejo de respuesta inesperada
-          alert("Unexpected response");
-        }
-      }, error => {
-        alert("Service delete error:" + error);
-        console.log("Error delete {} ", error);
-      });
-    }
+        )
+      }
+    });
   }
+
+
+
+
+
+
 
   public updateboratorio(): void {
     if (this.DataLaboratorio.nombre) {
