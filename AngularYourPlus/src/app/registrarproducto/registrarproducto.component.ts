@@ -34,17 +34,17 @@ export class RegistrarproductoComponent implements OnInit {
     private categoriaService: CategoriaService,
     private laboratorioService: LaboratorioService,
     private router: Router) {
-      // Initialize the edit form
+    // Initialize the edit form
     this.editarproducto = this.formBuilder.group({
-        nombre: [''],
-        precio: [''],
-        descripcion: [''],
-        imagen: [''],
-        categoria: [''],
-        laboratorio: [''],
-        id: [''],
-      });
-    }
+      nombre: [''],
+      precio: [''],
+      descripcion: [''],
+      imagen: [''],
+      categoria: [''],
+      laboratorio: [''],
+      id: [''],
+    });
+  }
 
   ngOnInit(): void {
     this.DataProducto = new Producto();
@@ -144,6 +144,7 @@ export class RegistrarproductoComponent implements OnInit {
         alert(response.body.messageList[0].content);
         this.registrarproducto.reset();
         this.productos.push(this.DataProducto);
+        Swal.fire('producto creado', `producto creado con exito `, "success")
       } else {
         alert(response.body.messageList[0].content);
       }
@@ -154,9 +155,7 @@ export class RegistrarproductoComponent implements OnInit {
   }
 
 
-
-
-  delete(producto:Producto):void{
+  delete(producto: Producto): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",
@@ -166,7 +165,7 @@ export class RegistrarproductoComponent implements OnInit {
     });
     swalWithBootstrapButtons.fire({
       title: "Estas Seguro?",
-      text: `Sefuro que deseas eliminar el producto ${producto.nombre}`,
+      text: `Seguro que deseas eliminar el producto ${producto.nombre}`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "si eliminar!",
@@ -174,10 +173,14 @@ export class RegistrarproductoComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
-        this.productoService.Deleteproducto(producto.id).subscribe(
-          response=>{
-            this.productos= this.productos.filter(cli=> cli !== producto)
-            Swal.fire( 'laboratorio eliminado', `producto eliminado con exito ${producto.nombre} `, "success")
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.auth.getToken()}`
+        });
+        this.productoService.Deleteproducto(producto.id, headers).subscribe(
+          response => {
+            this.productos = this.productos.filter(cli => cli !== producto)
+            Swal.fire('producto eliminado', `producto eliminado con exito ${producto.nombre} `, "success")
           }
         )
       }
@@ -216,6 +219,7 @@ export class RegistrarproductoComponent implements OnInit {
       if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
         alert(response.body.messageList[0].content);
         this.getProductos();
+        Swal.fire('producto actualizado', `producto Actualizado con exito `, "success")
       } else {
         alert(response.body.messageList[0].content);
       }
