@@ -8,7 +8,7 @@ export class Persona{
   password: string;
   rol: Rol;
 
-  constructor(nombre: string, apellido: string, correo: string, password: string, rol: Rol) {
+  constructor(nombre?: string, apellido?: string, correo?: string, password?: string, rol?: Rol) {
     this.id = '';
     this.nombre = nombre;
     this.apellido = apellido;

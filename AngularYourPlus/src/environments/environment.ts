@@ -11,6 +11,7 @@ export const environment = {
   urlpersona: `${urlBase}/yourplus/v1/personas`,
   urlproducto: `${urlBase}/yourplus/v1/productos`,
   urlcategoria: `${urlBase}/yourplus/v1/categorias`,
+  urlrol: `${urlBase}/yourplus/v1/roles`,
 };
 
 /*
