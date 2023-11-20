@@ -36,8 +36,7 @@
               <div class="form-group">
                 <select select class="form-control" id="rol" name="rol" formControlName="rol">
                   <option value="" disabled selected hidden>Selecciona un rol</option>
-                  <option value="Cliente">Cliente</option>
-                  <option value="Entrenador" selected>Administrador</option>
+                  <option  *ngFor="let rol of rols" [value]="rol.id">{{rol.nombre}}</option>
                 </select>
               </div>
               <button type="button" class="btn btn-info btn-block btn-round" (click)="Registrar()">Sing in</button>

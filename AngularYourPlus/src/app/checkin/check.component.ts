@@ -2,12 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { Config } from 'protractor';
 import { CargarScriptsService } from "../cargar-scripts.service";
 import { AuthService } from "../login/service/login.service";
-import { Persona } from "../domain/persona";
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { HttpResponse } from "@angular/common/http";
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Rol } from "../domain/rol";
+import Swal from "sweetalert2";
+import { Persona } from "../domain/persona";
 
-@Component ({
+@Component({
   selector: 'app-checkin',
   templateUrl: './checkin.component.html',
   styleUrls: ['./checkin.component.css'],
@@ -15,8 +16,9 @@ import { Rol } from "../domain/rol";
 
 })
 export class checkinComponent implements OnInit{
-  rolPersona: Rol;
+  rols: Rol[];
   Dataregistre: Persona;
+  Datarol: Rol;
   checkinForm: FormGroup;
   constructor(private _cargarScripts:CargarScriptsService,  private authService: AuthService, private formBuilder: FormBuilder){
     _cargarScripts.carga(["popup-checkin"]);
@@ -24,51 +26,68 @@ export class checkinComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.rolPersona = new Rol('');
-    this.Dataregistre = new Persona('','','','',this.rolPersona);
-        this.checkinForm = this.formBuilder.group({
+    this.Dataregistre = new Persona();
+    this.checkinForm = this.formBuilder.group({
           nombre: ['', Validators.required],
           apellido: ['', Validators.required],
           correo: ['', Validators.required],
           password: ['', Validators.required],
-          rol: ['', Validators.required]
+          rol: [''],
         });
   }
   public Registrar(): void {
-
-
-
     if (this.checkinForm.invalid) {
-        alert("Por favor, rellene los campos requeridos");
+        Swal.fire("Required ", "Por favor, rellene los campos requeridos", "warning")
     }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.authService.getToken()}`
+    });
     this.Dataregistre.nombre = this.checkinForm.get("nombre").value;
     this.Dataregistre.apellido = this.checkinForm.get("apellido").value;
     this.Dataregistre.correo = this.checkinForm.get("correo").value;
     this.Dataregistre.password = this.checkinForm.get("password").value;
-    this.rolPersona.descripcion = this.checkinForm.get("rol").value.toLowerCase();
-    this.Dataregistre.rol = this.rolPersona;
+    this.Dataregistre.rol.id = this.checkinForm.get("rol").value;
 
     console.log("dataClient to save", this.Dataregistre);
 
-    this.authService.Registrar(this.Dataregistre).subscribe(response => {
-
-      if (response instanceof HttpResponse) {
-          if (response.status === 200) {
-              alert("Save success");
-              this.checkinForm.reset();
-          } else {
-              alert("Save error");
-          }
+    this.authService.savePersona(this.Dataregistre, headers).subscribe(response => {
+      if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        alert(response.body.messageList[0].content);
+        this.checkinForm.reset();
+        Swal.fire('Usuario Creado', `${this.Dataregistre.rol} creado con exito `, "success")
       } else {
-          // Manejo de respuesta inesperada
-          alert("Unexpected response");
+        alert(response.body.messageList[0].content);
       }
-  }, error => {
-      console.log("Error post: ", error);
+    }, error => {
+      alert("Service error: " + error);
+      console.error("Error post: ", error);
+      Swal.fire("Error post", "Service error", "error")
+    });
+  }
+
+
+
+
+
+
+public getroles(): void {
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${this.authService.getToken()}`
   });
-
+  this.authService.getRol(headers).subscribe(
+    response => {
+      if (response instanceof HttpResponse && response.body.messageList[0].level === 'SUCCESS') {
+        this.rols = response.body.data as Rol[];
+      } else {
+        console.error(response.body.messageList[0].content);
+        this.rols = [];
+      }
+    }, error => {
+      console.error("Error in the request: ", error);
+      this.rols = [];
+    }
+  );
 }
-
 
 
 }

@@ -95,6 +95,10 @@ export class LaboratorioComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.auth.getToken()}`
+        });
         this.laboratorioService.DeleteLaboratorio(laboratorio.id).subscribe(
           response=>{
             this.laboratorios= this.laboratorios.filter(cli=> cli !== laboratorio)
